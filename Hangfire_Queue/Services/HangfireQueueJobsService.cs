@@ -40,17 +40,9 @@ namespace HangfireQueueJobs.Services
             Console.WriteLine($"{DateTime.Now.ToString()} - This is a Recurring job!");
         }
 
-        [Queue("lesscritical")]
-        public void MasterPromoCodeScheduleJob(int JobId)
-        {
-            Thread.Sleep(45000);
-
-            Console.WriteLine($"{DateTime.Now.ToString()} - This is a MasterPromoCodeScheduleJob job!");
-            _logger.LogError("Exec MPCS Job#" + JobId);
-        }
-        
-        [Queue("lesscritical")]
-        public void PromoCodeWalletJob(int JobId)
+      
+        [Queue("secondary_queue")]
+        public void Job1(int JobId)
         {
             Thread.Sleep(45000);
 
@@ -59,7 +51,7 @@ namespace HangfireQueueJobs.Services
         }
 
       
-        public void PushNotificationJob(int JobId)
+        public void Job2(int JobId)
         {
             Thread.Sleep(45000);
 
@@ -68,36 +60,13 @@ namespace HangfireQueueJobs.Services
         }
 
         
-        public void BookingJob(int JobId)
+        public void Job3(int JobId)
         {
             Thread.Sleep(45000);            
             Console.WriteLine($"{DateTime.Now.ToString()} - This is a BookingCancelJob job!");
-            _logger.LogError("Exec BC Job#" + JobId);
+            _logger.LogError("Exec Job3 Job#" + JobId);
         }
-        public Task DoQueueJob(int JobId)
-        {
-                        
-            Thread.Sleep(15000);
-            Console.WriteLine($"{DateTime.Now.ToString()} - This is a DoQueueJob job!");
-            _logger.LogError("Exec BC Job#" + JobId);
-            return Task.CompletedTask;
-        }
-
-        public Task WrapperJob(string JobId)
-        {
-            Thread.Sleep(5000);
-             
-            var lesscriticalQ_State = new EnqueuedState("lesscritical");
-            IBackgroundJobClient _backgroundJobClient = new BackgroundJobClient();
-            var jobId= _backgroundJobClient.Enqueue(() => this.MasterPromoCodeScheduleJob(1));
-            _backgroundJobClient.ChangeState(jobId, lesscriticalQ_State);
-            Console.WriteLine($"{DateTime.Now.ToString()} - This is a WrapperJob job!");
-            _logger.LogError("Exec WrapperJob Job#" + JobId);
-            Thread.Sleep(5000);
-            return Task.CompletedTask;
-        }
-
-
+       
 
     }
 }

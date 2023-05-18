@@ -12,18 +12,9 @@ namespace HangfireQueueJobs.Interface
         void AddReccuringJob();
         void AddDelayedJob();
         void AddContinuationJob();
-        [Queue("a")] 
-        void BookingJob(int id);
-        [Queue("a")] 
-        void PushNotificationJob(int id);
-        [Queue("b")] 
-        void MasterPromoCodeScheduleJob(int id);
-        [Queue("b")] 
-        void PromoCodeWalletJob(int id);
-
-        
-        Task DoQueueJob( int JobId);
-
-        Task WrapperJob(string jobId);
+        void Job3(int id);
+        void Job2(int id);
+        [Queue("secondary_queue")] 
+        void Job1(int id);  
     }
 }

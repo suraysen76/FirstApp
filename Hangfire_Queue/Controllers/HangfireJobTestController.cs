@@ -75,13 +75,13 @@ namespace HangfireTest1.Controllers
         public ActionResult Step1_MasterPromoCodeJobs()
         {            
             DateTime current = DateTime.Now.AddMinutes(2);
-            _logger.LogError("Executing Step1_MasterPromoCodeJobs.");
+            _logger.LogError("Executing Step1_Job1.");
             
             // Create 250 Jobs for default Q
             int numOfDefaultJobs = 50;
             for (int i = 1; i <= numOfDefaultJobs ; i++)
             {
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.MasterPromoCodeScheduleJob(i), current);                
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job1(i), current);                
             };  
            
             _logger.LogError("Executed Step1_MasterPromoCodeJobs Jobs.");
@@ -102,10 +102,10 @@ namespace HangfireTest1.Controllers
             for (int i = 1; i <= numOfBatch1Jobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.BookingJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job3(criticalJobcounter), current);
             };
             
-            _logger.LogError("Executed Step2_BookingJobs.");
+            _logger.LogError("Executed Step2_Job3.");
             return Ok();
         }
 
@@ -122,10 +122,10 @@ namespace HangfireTest1.Controllers
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.PushNotificationJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job2(criticalJobcounter), current);
             };
 
-            _logger.LogError("Executed Step3_PushNotoficationJobs.");
+            _logger.LogError("Executed Step3_Job2.");
             return Ok();
         }
 
@@ -142,10 +142,10 @@ namespace HangfireTest1.Controllers
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.BookingJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job3(criticalJobcounter), current);
             };
 
-            _logger.LogError("Executed Step4_BookingJobs_2.");
+            _logger.LogError("Executed Step4_Job3_2.");
             return Ok();
         }
         #endregion
@@ -159,42 +159,42 @@ namespace HangfireTest1.Controllers
             int numOfBatchJobs = 3;
 
             //Create 5 Jobs for default Q
-            _logger.LogError("Executing 3 PromoCode Jobs.");
+            _logger.LogError("Executing 3 Job1.");
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.MasterPromoCodeScheduleJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job1(criticalJobcounter), current);
             };
                                  
 
             
             numOfBatchJobs = 2;
-            _logger.LogError("Executing 2 PushNotificationJob Jobs.");
+            _logger.LogError("Executing 2 Job2.");
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.PushNotificationJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job2(criticalJobcounter), current);
             };
 
 
             current = current.AddMinutes(2);
-            _logger.LogError("Executing 2 BookingJob Jobs.");
+            _logger.LogError("Executing 2 Job2.");
             numOfBatchJobs = 2;
 
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.BookingJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job2(criticalJobcounter), current);
             };
 
 
             current = current.AddMinutes(1);
             numOfBatchJobs = 2;
-            _logger.LogError("Executing 10 PushNotificationJob (2) Jobs.");
+            _logger.LogError("Executing 10 Job1 (2) Jobs.");
             for (int i = 1; i <= numOfBatchJobs; i++)
             {
                 criticalJobcounter += 1;
-                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.PushNotificationJob(criticalJobcounter), current);
+                var jobId = BackgroundJob.Schedule(() => _hangfireTestService.Job1(criticalJobcounter), current);
             };
 
             return Ok();
